@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4F6E9C">
+<title>Muhammad &amp; Salma · Wedding Invitation</title>
+<meta name="description" content="You're invited to the wedding of Muhammad & Salma — Friday, 23 October 2026 at 7 PM, Lorina Hall, Armed Forces Officers Club.">
+
+<!-- Link preview (WhatsApp / Facebook). After hosting, replace YOUR-SITE-URL — see README.md -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Muhammad & Salma · Wedding Invitation">
+<meta property="og:description" content="Friday, 23 October 2026 · 7 PM · Lorina Hall, Armed Forces Officers Club">
+<meta property="og:image" content="https://YOUR-SITE-URL/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%99%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=7">
+<noscript><style>
+  .cover{display:none!important} body.is-locked{overflow:auto!important} main{visibility:visible!important}
+  [data-reveal],.hero *,.title,.w,.frame__img{opacity:1!important;transform:none!important;filter:none!important;-webkit-mask:none!important;mask:none!important}
+</style></noscript>
+</head>
+<body class="is-locked is-covered">
+
+<!-- Shared drawings used by every floral branch -->
+<svg class="svg-defs" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="leafShape" d="M0 0C7-8 22-10 36 0C22 10 7 8 0 0Z"/>
+    <g id="bloomShape">
+      <path d="M0 0C-5.5-4-6.5-12 0-15.5C6.5-12 5.5-4 0 0Z"/>
+      <path d="M0 0C-5.5-4-6.5-12 0-15.5C6.5-12 5.5-4 0 0Z" transform="rotate(72)"/>
+      <path d="M0 0C-5.5-4-6.5-12 0-15.5C6.5-12 5.5-4 0 0Z" transform="rotate(144)"/>
+      <path d="M0 0C-5.5-4-6.5-12 0-15.5C6.5-12 5.5-4 0 0Z" transform="rotate(216)"/>
+      <path d="M0 0C-5.5-4-6.5-12 0-15.5C6.5-12 5.5-4 0 0Z" transform="rotate(288)"/>
+    </g>
+  </defs>
+</svg>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- MUSIC: put song.mp3 next to index.html (optional) -->
+<audio id="bgMusic" src="song.mp3" loop preload="metadata"></audio>
+
+<button class="ctrl ctrl--music" id="musicToggle" type="button" hidden
+        aria-label="Play or pause music" data-en-aria="Play or pause music" data-ar-aria="تشغيل أو إيقاف الموسيقى">
+  <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+</button>
+<button class="ctrl ctrl--lang" id="langToggle" type="button"
+        aria-label="Switch language" data-en-aria="Switch to Arabic" data-ar-aria="Switch to English">العربية</button>
+
+
+<!-- ================= COVER: blurred intro → signature → Open Invitation → envelope ================= -->
+<section class="cover" id="cover" aria-label="Invitation cover">
+  <div class="cover__wash" aria-hidden="true"></div>
+  <div class="floral floral--tl" data-floral aria-hidden="true"></div>
+  <div class="floral floral--br" data-floral aria-hidden="true"></div>
+
+  <!-- the blurred, tinted glass the signature is written on -->
+  <div class="intro" aria-hidden="true">
+    <span class="intro__orb intro__orb--1"></span>
+    <span class="intro__orb intro__orb--2"></span>
+    <span class="intro__orb intro__orb--3"></span>
+    <span class="intro__orb intro__orb--4"></span>
+  </div>
+
+  <div class="cover__stage">
+    <div class="sig cover__sig" id="coverSig"></div>
+
+    <div class="cover__rest">
+      <div class="sprig" data-sprig aria-hidden="true"></div>
+      <p class="cover__date" data-long-date>Friday, 23 October 2026</p>
+      <p class="cover__dear" id="coverDear">Dear family &amp; friends,</p>
+      <p class="cover__note" data-en="we have something lovely to share with you" data-ar="عندنا خبر حلو عايزين نقولهولكم">we have something lovely to share with you</p>
+      <span class="pulse-wrap cover__open">
+        <button class="btn btn--primary btn--pulse" id="openBtn" type="button">
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3.5 7h17v11h-17z"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg>
+          <span data-en="Open Invitation" data-ar="افتح الدعوة">Open Invitation</span>
+        </button>
+      </span>
+    </div>
+  </div>
+
+  <p class="cover__skip" data-en="Tap anywhere to skip" data-ar="دوس في أي حتة للتخطي">Tap anywhere to skip</p>
+
+  <!-- the envelope that opens after "Open Invitation" -->
+  <div class="env-stage" id="envStage" aria-hidden="true">
+    <div class="env" id="env">
+      <div class="env__back"></div>
+      <div class="env__card" id="envCard">
+        <div class="env__card-inner">
+          <div class="sprig" data-sprig></div>
+          <p class="env__invited" data-en="You are invited" data-ar="أنتم مدعوون">You are invited</p>
+          <p class="env__to" data-en="to celebrate the wedding of" data-ar="لحضور حفل زفاف">to celebrate the wedding of</p>
+          <p class="env__names" data-couple>Muhammad &amp; Salma</p>
+          <p class="env__date" data-long-date>Friday, 23 October 2026</p>
+        </div>
+        <span class="env__shine"></span>
+      </div>
+      <svg class="env__front" viewBox="0 0 300 200" preserveAspectRatio="none">
+        <polygon points="0,0 150,112 0,200" fill="#C3D3EA"/>
+        <polygon points="300,0 150,112 300,200" fill="#B9CBE6"/>
+        <polygon points="0,200 150,98 300,200" fill="#CEDBEF"/>
+        <path d="M0 200L150 98L300 200" fill="none" stroke="rgba(52,80,122,.16)" stroke-width="1"/>
+      </svg>
+      <div class="env__flap" id="envFlap">
+        <svg class="env__flap-face env__flap-face--out" viewBox="0 0 300 120" preserveAspectRatio="none"><polygon points="0,0 300,0 150,120" fill="#A7BEE1"/><path d="M0 0L150 120L300 0" fill="none" stroke="rgba(52,80,122,.2)" stroke-width="1"/></svg>
+        <svg class="env__flap-face env__flap-face--in" viewBox="0 0 300 120" preserveAspectRatio="none"><polygon points="0,0 300,0 150,120" fill="#EEF3FA"/></svg>
+      </div>
+      <div class="env__seal" id="envSeal"><span data-monogram>M&amp;S</span></div>
+    </div>
+  </div>
+</section>
+
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero" id="hero">
+    <div class="floral floral--tl" data-floral aria-hidden="true"></div>
+    <div class="floral floral--tr" data-floral aria-hidden="true"></div>
+
+    <div class="hero__inner">
+      <p class="hero__pre" data-en="The wedding of" data-ar="حفل زفاف">The wedding of</p>
+      <h1 class="hero__names">
+        <span class="hero__name hero__name--a" id="heroGroom">Muhammad</span>
+        <span class="hero__amp" data-en="&amp;" data-ar="و">&amp;</span>
+        <span class="hero__name hero__name--b" id="heroBride">Salma</span>
+      </h1>
+
+      <!-- PHOTO: cover.jpg (landscape). Position it with ?edit — see README -->
+      <figure class="frame frame--hero" data-tilt>
+        <span class="frame__back" aria-hidden="true"></span>
+        <span class="frame__mat" data-tilt-target>
+          <span class="frame__window" data-photo-key="cover">
+            <span class="frame__ph"><span data-monogram>M &amp; S</span></span>
+            <img class="frame__img" src="cover.jpg" alt="Muhammad and Salma" decoding="async" fetchpriority="high">
+            <span class="frame__shine" aria-hidden="true"></span>
+          </span>
+        </span>
+        <span class="floral floral--tr frame__floral" data-floral aria-hidden="true"></span>
+        <span class="floral floral--bl frame__floral" data-floral aria-hidden="true"></span>
+      </figure>
+
+      <p class="hero__date" data-long-date>Friday, 23 October 2026</p>
+    </div>
+    <span class="hero__cue" aria-hidden="true"></span>
+  </header>
+
+
+  <!-- ================= THE WEDDING ================= -->
+  <section class="section wedding">
+    <div class="sprig sprig--lg" data-sprig data-reveal="sprig" aria-hidden="true"></div>
+
+    <p class="verse__ar" data-reveal="words" lang="ar" dir="rtl">﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾</p>
+    <p class="verse__en" data-reveal="blur" style="--delay:900ms">Among His signs: He created for you partners from among yourselves, that you may find peace in one another, and He placed between you love and mercy.</p>
+
+    <p class="announce" data-reveal="up" data-en="With joy and gratitude, we announce the marriage of" data-ar="بكل الفرح والامتنان نعلن زفاف">With joy and gratitude, we announce the marriage of</p>
+
+    <div class="families" id="families" data-reveal="up" hidden>
+      <div class="family"><span class="family__label" data-en="Son of" data-ar="نجل">Son of</span><span class="family__name" id="famGroom"></span></div>
+      <div class="family"><span class="family__label" data-en="Daughter of" data-ar="كريمة">Daughter of</span><span class="family__name" id="famBride"></span></div>
+    </div>
+
+    <h2 class="couple" data-reveal="up" style="--delay:150ms">
+      <span id="coupleGroom">Muhammad</span>
+      <span class="couple__amp" data-en="&amp;" data-ar="و">&amp;</span>
+      <span id="coupleBride">Salma</span>
+    </h2>
+    <p class="wedding__venue" id="weddingVenue" data-reveal="up" style="--delay:300ms">at Lorina Hall, Armed Forces Officers Club</p>
+
+    <div class="dateblock" id="dateblock" data-reveal="dateblock">
+      <div class="db__side">
+        <span class="db__label" data-en="Time" data-ar="الساعة">Time</span>
+        <span class="db__big" id="dbTime">7:00</span>
+        <span class="db__small" id="dbMeridiem">PM</span>
+      </div>
+      <div class="db__mid">
+        <span class="db__day" id="dbDay">Friday</span>
+        <span class="db__num" id="dbNum">23</span>
+        <span class="db__month" id="dbMonth">October</span>
+      </div>
+      <div class="db__side">
+        <span class="db__label" data-en="Year" data-ar="سنة">Year</span>
+        <span class="db__big" id="dbYear">2026</span>
+        <span class="db__small">&nbsp;</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= OUR STORY: 3D photo carousel ================= -->
+  <section class="section story">
+    <div class="head" data-reveal="head">
+      <h2 class="title" data-en="Our Story" data-ar="حكايتنا">Our Story</h2>
+      <div class="sprig" data-sprig aria-hidden="true"></div>
+    </div>
+    <p class="lead" data-reveal="up" data-en="A few of the moments that brought us here." data-ar="شوية لحظات من الحكاية اللي وصلتنا لهنا">A few of the moments that brought us here.</p>
+
+    <!-- PHOTOS: gallery-1.jpg … gallery-8.jpg (landscape). Slides are built by script.js -->
+    <div class="cf" id="coverflow" data-reveal="cf">
+      <div class="cf__viewport" id="cfViewport">
+        <div class="cf__track" id="cfTrack"></div>
+      </div>
+      <div class="cf__nav">
+        <button class="cf__arrow cf__arrow--prev" id="cfPrev" type="button" aria-label="Previous photo">&#8249;</button>
+        <div class="cf__dots" id="cfDots"></div>
+        <button class="cf__arrow cf__arrow--next" id="cfNext" type="button" aria-label="Next photo">&#8250;</button>
+      </div>
+      <p class="cf__hint" data-en="Swipe to browse, tap a photo to open it" data-ar="اسحب عشان تقلّب، ودوس على الصورة عشان تفتحها">Swipe to browse, tap a photo to open it</p>
+    </div>
+  </section>
+
+
+  <!-- ================= COUNTDOWN + CALENDAR ================= -->
+  <section class="section when">
+    <div class="head" data-reveal="head">
+      <h2 class="title" data-en="Counting down" data-ar="باقي على الفرح">Counting down</h2>
+      <div class="sprig" data-sprig aria-hidden="true"></div>
+    </div>
+
+    <div class="cd" role="timer" aria-live="off">
+      <div class="cd__unit" data-reveal="rise" style="--delay:0ms">
+        <svg class="cd__ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="cd__track" cx="50" cy="50" r="46"/><circle class="cd__prog" data-ring="d" cx="50" cy="50" r="46" pathLength="100"/></svg>
+        <div class="cd__num" data-unit="d"><span>00</span></div>
+        <span class="cd__label" data-en="Days" data-ar="يوم">Days</span>
+      </div>
+      <div class="cd__unit" data-reveal="rise" style="--delay:110ms">
+        <svg class="cd__ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="cd__track" cx="50" cy="50" r="46"/><circle class="cd__prog" data-ring="h" cx="50" cy="50" r="46" pathLength="100"/></svg>
+        <div class="cd__num" data-unit="h"><span>00</span></div>
+        <span class="cd__label" data-en="Hours" data-ar="ساعة">Hours</span>
+      </div>
+      <div class="cd__unit" data-reveal="rise" style="--delay:220ms">
+        <svg class="cd__ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="cd__track" cx="50" cy="50" r="46"/><circle class="cd__prog" data-ring="m" cx="50" cy="50" r="46" pathLength="100"/></svg>
+        <div class="cd__num" data-unit="m"><span>00</span></div>
+        <span class="cd__label" data-en="Minutes" data-ar="دقيقة">Minutes</span>
+      </div>
+      <div class="cd__unit" data-reveal="rise" style="--delay:330ms">
+        <svg class="cd__ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="cd__track" cx="50" cy="50" r="46"/><circle class="cd__prog" data-ring="s" cx="50" cy="50" r="46" pathLength="100"/></svg>
+        <div class="cd__num" data-unit="s"><span>00</span></div>
+        <span class="cd__label" data-en="Seconds" data-ar="ثانية">Seconds</span>
+      </div>
+    </div>
+    <p class="cd__done" id="cdDone" hidden data-en="The celebration has begun!" data-ar="الفرح بدأ!">The celebration has begun!</p>
+
+    <div class="cal card" id="calendar" data-reveal="cal" aria-label="Wedding date calendar"></div>
+
+    <div data-reveal="up">
+      <a class="btn" id="calendarBtn" href="#" target="_blank" rel="noopener">
+        <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+        <span data-en="Add to calendar" data-ar="ضيفه على الكالندر">Add to calendar</span>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ================= VENUE ================= -->
+  <section class="section venue">
+    <div class="head" data-reveal="head">
+      <h2 class="title" data-en="The Venue" data-ar="مكان الفرح">The Venue</h2>
+      <div class="sprig" data-sprig aria-hidden="true"></div>
+    </div>
+
+    <!-- PHOTO: venue.jpg (landscape) -->
+    <figure class="frame frame--venue" data-reveal="frame" data-tilt>
+      <span class="frame__back" aria-hidden="true"></span>
+      <span class="frame__mat" data-tilt-target>
+        <span class="frame__window" data-photo-key="venue">
+          <span class="frame__ph"><span data-monogram>M &amp; S</span></span>
+          <img class="frame__img" src="venue.jpg" alt="Lorina Hall" loading="lazy" decoding="async">
+          <span class="frame__shine" aria-hidden="true"></span>
+        </span>
+      </span>
+      <span class="floral floral--tr frame__floral" data-floral aria-hidden="true"></span>
+      <span class="floral floral--bl frame__floral" data-floral aria-hidden="true"></span>
+    </figure>
+
+    <p class="venue__name" id="venueName" data-reveal="up">Lorina Hall</p>
+    <p class="venue__place" id="venuePlace" data-reveal="up" style="--delay:120ms">Armed Forces Officers Club</p>
+
+    <div class="venue__cta" data-reveal="up" style="--delay:240ms">
+      <span class="pulse-wrap pulse-wrap--glow">
+        <a class="btn btn--primary btn--lg" id="directionsBtn" href="#" target="_blank" rel="noopener">
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <span data-en="Get directions" data-ar="افتح الخريطة">Get directions</span>
+        </a>
+      </span>
+    </div>
+  </section>
+
+
+  <!-- ================= WISHES ================= -->
+  <section class="section wishes" id="wishes">
+    <div class="head" data-reveal="head">
+      <h2 class="title" data-en="Guest Wishes" data-ar="أمنيات المعازيم">Guest Wishes</h2>
+      <div class="sprig" data-sprig aria-hidden="true"></div>
+    </div>
+
+    <form class="wish-form card" id="wishForm" data-reveal="up">
+      <div class="field">
+        <label for="wishName" data-en="Your name" data-ar="اسمك">Your name</label>
+        <input id="wishName" name="name" type="text" maxlength="60" autocomplete="name" required>
+        <span class="field__line" aria-hidden="true"></span>
+      </div>
+      <div class="field">
+        <label for="wishMessage" data-en="Your wish for us" data-ar="أمنيتك لينا">Your wish for us</label>
+        <textarea id="wishMessage" name="wish" rows="3" maxlength="500" required></textarea>
+        <span class="field__line" aria-hidden="true"></span>
+      </div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn--primary btn--block" id="wishSubmit" type="submit">
+        <span class="btn__label" data-en="Send wish" data-ar="ابعت أمنيتك">Send wish</span>
+        <span class="btn__spinner" aria-hidden="true"></span>
+      </button>
+      <p class="form-note" id="wishNote" role="status" hidden></p>
+    </form>
+
+    <div class="wall" id="wishWall" aria-live="polite"></div>
+    <p class="wall__empty" id="wallEmpty" data-en="No wishes yet. Be the first to leave one." data-ar="لسه مفيش أمنيات… خليك أول واحد يكتب">No wishes yet. Be the first to leave one.</p>
+  </section>
+
+
+  <!-- ================= CLOSING ================= -->
+  <footer class="closing">
+    <div class="floral floral--bl" data-floral data-reveal="bloom" aria-hidden="true"></div>
+    <div class="floral floral--br" data-floral data-reveal="bloom" aria-hidden="true"></div>
+    <p class="closing__line" data-reveal="up" data-en="Your presence is the most beautiful gift" data-ar="وجودكم معانا أحلى هدية">Your presence is the most beautiful gift</p>
+    <div class="sig closing__sig" id="closingSig" data-reveal="sig"></div>
+    <p class="closing__date" data-short-date data-reveal="up" style="--delay:300ms">23 . 10 . 2026</p>
+  </footer>
+
+</main>
+
+
+<!-- ================= PHOTO VIEWER ================= -->
+<div class="lb" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photos">
+  <div class="lb__top">
+    <span class="lb__count" id="lbCount">1 / 1</span>
+    <button class="lb__close" id="lbClose" type="button" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="lb__stage" id="lbStage"></div>
+  <button class="lb__nav lb__nav--prev" id="lbPrev" type="button" aria-label="Previous">&#8249;</button>
+  <button class="lb__nav lb__nav--next" id="lbNext" type="button" aria-label="Next">&#8250;</button>
+  <div class="lb__thumbs" id="lbThumbs"></div>
+</div>
+
+<script src="script.js?v=7"></script>
+</body>
+</html>
